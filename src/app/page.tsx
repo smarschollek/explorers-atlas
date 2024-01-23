@@ -1,7 +1,30 @@
+"use client";
+import { signIn, useSession, } from "next-auth/react";
 import Image from "next/image";
+import { redirect } from 'next/navigation'
 import styles from "./page.module.css";
+import { Button } from "@mantine/core";
+import { IconBrandDiscordFilled } from "@tabler/icons-react";
+
+
 
 export default function Home() {
+
+  const { data: session, } = useSession();
+
+  if (!session) {
+    return (
+      <Button
+        color="blue"
+        leftSection={<IconBrandDiscordFilled />}
+        onClick={() => signIn('discord')}
+        variant="filled"
+      >
+        Login with Discord
+      </Button>
+    )
+  }
+
   return (
     <main className={styles.main}>
       <div className={styles.description}>
